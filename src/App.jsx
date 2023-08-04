@@ -5,9 +5,9 @@ import CreateOrder, {
   action as createOrderAction,
 } from "./features/order/CreateOrder";
 import Order, { loader as orderLoader } from "./features/order/Order";
+import AppLayout from "./ui/AppLayout";
 import Error from "./ui/Error";
 import Home from "./ui/Home";
-import AppLayout from "./utils/AppLayout";
 
 const router = createBrowserRouter([
   {
