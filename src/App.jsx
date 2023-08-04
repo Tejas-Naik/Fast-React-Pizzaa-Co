@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom/dist";
 import Cart from "./features/cart/Cart";
-import Menu from "./features/menu/Menu";
+import Menu, { loader as menuLoader } from "./features/menu/Menu";
 import CreateOrder from "./features/order/CreateOrder";
 import Order from "./features/order/Order";
 import Home from "./ui/Home";
@@ -17,6 +17,7 @@ const router = createBrowserRouter([
       {
         path: "/menu",
         element: <Menu />,
+        loader: menuLoader,   // 2) add leader to react-router
       },
       {
         path: "/cart",
@@ -35,7 +36,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const x = 12;
   return <RouterProvider router={router} />;
 }
 
