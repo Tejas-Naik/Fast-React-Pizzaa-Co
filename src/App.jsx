@@ -17,7 +17,7 @@ const router = createBrowserRouter([
       {
         path: "/menu",
         element: <Menu />,
-        loader: menuLoader,   // 2) add leader to react-router
+        loader: menuLoader,
       },
       {
         path: "/cart",
