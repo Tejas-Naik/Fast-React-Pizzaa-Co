@@ -8,6 +8,7 @@ import {
   formatDate,
 } from '../../utils/helpers';
 import OrderItem from './OrderItem';
+import UpdateOrder from './UpdateOrder';
 
 export async function loader({ params }) {
   const order = await getOrder(params.orderID);
@@ -26,8 +27,6 @@ function Order() {
     [fetcher],
   );
 
-  console.log(fetcher.data);
-
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
   const {
     id,
@@ -39,7 +38,6 @@ function Order() {
     cart,
   } = order;
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
-  console.log(cart);
 
   return (
     <div className="space-y-8 px-4 py-6">
@@ -96,6 +94,8 @@ function Order() {
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+
+      {!priority && <UpdateOrder order={order} />}
     </div>
   );
 }
