@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, redirect, useActionData, useNavigation } from 'react-router-dom';
 import { createOrder } from '../../services/apiRestaurant';
 import store from '../../store';
@@ -7,6 +7,7 @@ import Button from '../../ui/Button';
 import { formatCurrency } from '../../utils/helpers';
 import { clearCart, getCart, getTotalCartPrice } from '../cart/CartSlice';
 import EmptyCart from '../cart/EmptyCart';
+import { fetchAddress, getUserAddress } from '../user/userSlice';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -18,11 +19,12 @@ function CreateOrder() {
   const username = useSelector((state) => state.user.username);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
-
+  const dispatch = useDispatch();
   const formErrors = useActionData();
 
   const [withPriority, setWithPriority] = useState(false);
   const cart = useSelector(getCart);
+  const userAddress = useSelector(getUserAddress);
   const totalCartPrice = useSelector(getTotalCartPrice);
   const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
   const totalPrice = totalCartPrice + priorityPrice;
@@ -59,13 +61,17 @@ function CreateOrder() {
 
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
           <label className="sm:basis-40">Address</label>
-          <div className="grow">
+          <div className="flex grow">
             <input
               className="input w-full"
               type="text"
               name="address"
+              defaultValue={userAddress}
               required
             />
+            <Button type="small" onClick={() => dispatch(fetchAddress())}>
+              Get Position
+            </Button>
           </div>
         </div>
 
